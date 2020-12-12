@@ -52,6 +52,9 @@ namespace KissTheCook.API.Controllers
 
             _cookingRepository.Add(recipe);
 
+            if (!ModelState.IsValid) 
+                return BadRequest("Invalid data provided.");
+
             if (await _cookingRepository.SaveChanges())
             {
                 var recipeToReturn = _mapper.Map<RecipeForDetailedDto>(recipe);
@@ -68,9 +71,15 @@ namespace KissTheCook.API.Controllers
 
             _mapper.Map(recipeForUpdateDto, recipeFromRepository);
 
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data provided.");
+
             if (await _cookingRepository.SaveChanges())
             {
-                return Ok($"Recipe {id} updated successfully");
+                return Ok(new
+                {
+                    message = $"Recipe {id} updated successfully"
+                });
             }
 
             return BadRequest($"Updating recipe {id} failed on save");

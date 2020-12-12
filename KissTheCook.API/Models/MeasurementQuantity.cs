@@ -9,7 +9,6 @@ namespace KissTheCook.API.Models
 {
     public class MeasurementQuantity : AbstractEntity
     {
-        [Required]
         public string Amount { get; set; }
         public ICollection<RecipeIngredient> RecipeIngredients { get; set; }
     }

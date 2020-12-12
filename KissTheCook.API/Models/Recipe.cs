@@ -8,10 +8,13 @@ namespace KissTheCook.API.Models
 {
     public class Recipe : AbstractEntity
     {
-        [Required]
         public string Name { get; set; }
-        [Required]
+        
         public string Description { get; set; }
+
+        [Range(1,5)]
+        public int Rating { get; set; }
+
         public ICollection<RecipeIngredient> RecipeIngredients { get; set; }
     }
 }

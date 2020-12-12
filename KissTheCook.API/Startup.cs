@@ -33,13 +33,13 @@ namespace KissTheCook.API
                 "data source = (LocalDb)\\MSSQLLocalDB; initial catalog = KissTheCookDb; integrated security = True; MultipleActiveResultSets = True; App = EntityFramework"
                 )
             );
-            services.AddControllers();
-            services.AddScoped<ICookingRepository, CookingRepository>();
-            services.AddAutoMapper(typeof(ICookingRepository).Assembly);
             services.AddControllers().AddNewtonsoftJson(options => // Required for JSON serialization to work with navigation properties
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
+            services.AddScoped<ICookingRepository, CookingRepository>();
+            services.AddAutoMapper(typeof(ICookingRepository).Assembly);
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -76,8 +76,6 @@ namespace KissTheCook.API.Data
         // Recipes
         public async Task<Recipe> GetRecipe(int id)
         {
-            //var recipe = await _db.RecipeIngredients.Where(x => x.RecipeId == id).ToListAsync();
-            // return await _db.Recipes.Where(r => r.Id == id).FirstOrDefaultAsync();
             return await _db.Recipes.Include(i => i.RecipeIngredients).FirstOrDefaultAsync(r => r.Id == id);
         }
 
@@ -85,11 +83,11 @@ namespace KissTheCook.API.Data
         {
             var ingredientsCount = @params.IngredientsSet.Count(); // Verify the number of ingredients in params
             
-            IQueryable<int> recipeIds = GetRecipeIdsByIngredient(@params.IngredientsSet[0]); // Get recipes containing first ingredient
+            IQueryable<int> recipeIds = GetRecipeIdsByIngredient(@params.IngredientsSet.First()); // Get recipes containing first ingredient
 
             for (int i = 1; i < ingredientsCount; i++) // for the rest of ingredients
                 recipeIds = recipeIds.Intersect( //  get common recipe ids for previous
-                    GetRecipeIdsByIngredient(@params.IngredientsSet[i])); // and current ingredients
+                    GetRecipeIdsByIngredient(@params.IngredientsSet.ElementAt(i))); // and current ingredients
 
             IList<int> recipeIdsToReturn = new List<int>();
 
@@ -97,7 +95,16 @@ namespace KissTheCook.API.Data
                 if (_db.RecipeIngredients.Where(x => x.RecipeId == id).ToList().Count <= ingredientsCount)
                     recipeIdsToReturn.Add(id);
 
+            //var test = await _db.Recipes
+            //    .Include(ri => ri.RecipeIngredients)
+            //    .Where(r =>
+            //             @params.IngredientsSet.IsEquivalentTo(
+            //             r.RecipeIngredients.Select(x => x.IngredientId).ToList())
+            //        )
+            //    .ToListAsync();
+
             return await _db.Recipes.Where(r => recipeIdsToReturn.Contains(r.Id)).ToListAsync();
+       //    return test;
         }
 
         /// <summary>
@@ -110,5 +117,13 @@ namespace KissTheCook.API.Data
                 )
                 .Select(x => x.RecipeId);
         }
+
+        //private IQueryable<int> GetRecipeIdsByIngredientSet(IList<int> ingredientId)
+        //{
+        //    return _db.RecipeIngredients.Where(r =>
+        //        r.IngredientId.Equals
+        //    )
+        //    .Select(x => x.RecipeId);
+        //}
     }
 }

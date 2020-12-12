@@ -3,14 +3,16 @@ using KissTheCook.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KissTheCook.API.Migrations
 {
     [DbContext(typeof(KissTheCookDb))]
-    partial class KissTheCookDbModelSnapshot : ModelSnapshot
+    [Migration("20201212150829_RatingAddedToRecipe")]
+    partial class RatingAddedToRecipe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

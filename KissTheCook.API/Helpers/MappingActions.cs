@@ -11,7 +11,7 @@ namespace KissTheCook.API.Helpers
 {
     public class MappingActions
     {/// <summary>
-    /// Workaround for injecting dependencies into the Automapper Profile
+    /// Workaround for dependencies injection into the Automapper Profile
     /// </summary>
         public class RecipeIngredientsToMeasurementQuantity : IMappingAction<RecipeIngredient, RecipeIngredientForDetailedDto>
         {

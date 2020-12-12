@@ -8,6 +8,6 @@ namespace KissTheCook.API.Helpers
 {
     public class RecipeParams
     {
-        public int[] IngredientsSet { get; set; }
+        public IList<int> IngredientsSet { get; set; }
     }
 }
