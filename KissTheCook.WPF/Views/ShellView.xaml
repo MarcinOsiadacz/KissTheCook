@@ -26,16 +26,34 @@
         </Grid.RowDefinitions>
         
         <!-- Row 1 -->
-        <DataGrid Grid.Row="1" Grid.Column="1" x:Name="Recipes" IsReadOnly="True"
-                  SelectedItem="{Binding Path=SelectedRecipe, Mode=OneWayToSource}"></DataGrid>
-        
-        <!-- Active Child Form -->
-        <ContentControl Grid.Row="1" Grid.Column="3"
-                        x:Name="ActiveItem"></ContentControl>
+        <ListBox Grid.Row="1" Grid.Column="1" x:Name="Ingredients" 
+                 SelectionMode="Multiple" DisplayMemberPath="Name">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}"
+                            BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                    <Setter Property="IsSelected" 
+                            Value="{Binding IsSelected, Mode=TwoWay}"></Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
 
         <!-- Row 2 -->
-        <Button x:Name="ShowRecipeDetails" Grid.Row="2" Grid.Column="1">Show Recipe Details</Button>
+        <DataGrid Grid.Row="2" Grid.Column="1" x:Name="Recipes" IsReadOnly="True"
+                  SelectedItem="{Binding Path=SelectedRecipe, Mode=OneWayToSource}"
+                  ></DataGrid>
+        <!-- Active Child Form -->
+        <ContentControl Grid.Row="2" Grid.Column="3"
+                        x:Name="ActiveItem"
+                        ></ContentControl>
+
+        <!-- Row 3 -->
+        <Button x:Name="ShowRecipeDetails" Grid.Row="3" Grid.Column="1"
+                >Show Recipe Details</Button>
         
+        <!-- Row 4 -->
+        <Button x:Name="LoadRecipes" Grid.Row="4" Grid.Column="1"
+                >Load Recipes</Button>
+
         <!-- Row 1 --><!--
         <TextBlock Text="{Binding Path=FullName, Mode=OneWay}" 
                    Grid.Row="1" Grid.Column="1"></TextBlock>

@@ -79,15 +79,15 @@ namespace KissTheCook.API.Data
             return await _db.Recipes.Include(i => i.RecipeIngredients).FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public async Task<IEnumerable<Recipe>> GetRecipes(RecipeParams @params)
+        public async Task<IEnumerable<Recipe>> GetRecipes(IList<int> ingredientIds)
         {
-            var ingredientsCount = @params.IngredientsSet.Count(); // Verify the number of ingredients in params
+            var ingredientsCount = ingredientIds.Count(); // Verify the number of ingredients in params
             
-            IQueryable<int> recipeIds = GetRecipeIdsByIngredient(@params.IngredientsSet.First()); // Get recipes containing first ingredient
+            IQueryable<int> recipeIds = GetRecipeIdsByIngredient(ingredientIds.First()); // Get recipes containing first ingredient
 
             for (int i = 1; i < ingredientsCount; i++) // for the rest of ingredients
                 recipeIds = recipeIds.Intersect( //  get common recipe ids for previous
-                    GetRecipeIdsByIngredient(@params.IngredientsSet.ElementAt(i))); // and current ingredients
+                    GetRecipeIdsByIngredient(ingredientIds.ElementAt(i))); // and current ingredients
 
             IList<int> recipeIdsToReturn = new List<int>();
 
@@ -95,16 +95,7 @@ namespace KissTheCook.API.Data
                 if (_db.RecipeIngredients.Where(x => x.RecipeId == id).ToList().Count <= ingredientsCount)
                     recipeIdsToReturn.Add(id);
 
-            //var test = await _db.Recipes
-            //    .Include(ri => ri.RecipeIngredients)
-            //    .Where(r =>
-            //             @params.IngredientsSet.IsEquivalentTo(
-            //             r.RecipeIngredients.Select(x => x.IngredientId).ToList())
-            //        )
-            //    .ToListAsync();
-
             return await _db.Recipes.Where(r => recipeIdsToReturn.Contains(r.Id)).ToListAsync();
-       //    return test;
         }
 
         /// <summary>

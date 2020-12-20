@@ -12,10 +12,10 @@ namespace KissTheCook.WPF.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public int Rating { get; set; }
-        public Ingredient[] RecipeIngredients { get; set; }
+        public RecipeIngredient[] RecipeIngredients { get; set; }
     }
 
-    public class Ingredient
+    public class RecipeIngredient
     {
         public int MeasurementQuantityId { get; set; }
         public string MeasurementQuantityAmount { get; set; }

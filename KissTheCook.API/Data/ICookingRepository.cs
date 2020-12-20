@@ -29,7 +29,7 @@ namespace KissTheCook.API.Data
         Task<MeasurementQuantity> GetMeasurementQuantity(int id);
 
         /* Recipes */
-        Task<IEnumerable<Recipe>> GetRecipes(RecipeParams @params);
+        Task<IEnumerable<Recipe>> GetRecipes(IList<int> ingredientIds);
         Task<Recipe> GetRecipe(int id);
     }
 }

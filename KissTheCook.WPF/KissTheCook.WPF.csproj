@@ -79,12 +79,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Api\KissTheCookApiProxy.cs" />
+    <Compile Include="Api\IKissTheCookApi.cs" />
+    <Compile Include="Api\IngredientResponseModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers\GetRecipeByIngredientsParams.cs" />
-    <Compile Include="Helpers\KissTheCookApi.cs" />
+    <Compile Include="Api\KissTheCookApi.cs" />
+    <Compile Include="Models\IngredientListModel.cs" />
     <Compile Include="Models\PersonModel.cs" />
     <Compile Include="Models\RecipeDetailedModel.cs" />
     <Compile Include="Models\RecipeListModel.cs" />
@@ -129,7 +132,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\RecipeDetailedView.xaml">
       <SubType>Designer</SubType>

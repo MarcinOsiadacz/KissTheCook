@@ -24,11 +24,16 @@ namespace KissTheCook.API.Controllers
             _cookingRepository = cookingRepository;
             _mapper = mapper;
         }
-        
+
+        /// <summary>
+        /// This GET method provides recipes based on the list of provided Ingredient Ids.
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns>Recipes consisting of the igredients provided as parameter</returns>
         [HttpGet]
-        public async Task<IActionResult> GetRecipes([FromBody]RecipeParams @params)
+        public async Task<IActionResult> GetRecipes([FromQuery]IList<int> ids)
         {
-            var recipes = await _cookingRepository.GetRecipes(@params);
+            var recipes = await _cookingRepository.GetRecipes(ids);
 
             var recipesToReturn = _mapper.Map<IEnumerable<RecipeForListDto>>(recipes);
             

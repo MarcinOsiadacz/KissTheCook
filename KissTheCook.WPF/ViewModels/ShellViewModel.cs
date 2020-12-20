@@ -1,5 +1,5 @@
 ﻿using Caliburn.Micro;
-using KissTheCook.WPF.Helpers;
+using KissTheCook.WPF.Api;
 using KissTheCook.WPF.Models;
 using System;
 using System.Collections.Generic;
@@ -11,10 +11,26 @@ namespace KissTheCook.WPF.ViewModels
 {
     public class ShellViewModel : Conductor<object>
     {
+        private KissTheCookApiProxy _apiProxy;
         private RecipeListModel _selectedRecipe;
-
         private BindableCollection<RecipeListModel> _recipes = new BindableCollection<RecipeListModel>();
-
+        private BindableCollection<IngredientListModel> _ingredients = new BindableCollection<IngredientListModel>();
+        private BindableCollection<IngredientListModel> _selectedIngredients = new BindableCollection<IngredientListModel>();
+        
+        public KissTheCookApiProxy ApiProxy
+        {
+            get { return _apiProxy; }
+            set { _apiProxy = value; }
+        }
+        public RecipeListModel SelectedRecipe
+        {
+            get { return _selectedRecipe; }
+            set
+            {
+                _selectedRecipe = value;
+                NotifyOfPropertyChange(() => SelectedRecipe);
+            }
+        }
         public BindableCollection<RecipeListModel> Recipes
         {
             get
@@ -26,42 +42,60 @@ namespace KissTheCook.WPF.ViewModels
                 _recipes = value;
             }
         }
-
-        public RecipeListModel SelectedRecipe
+        public BindableCollection<IngredientListModel> Ingredients
         {
-            get { return _selectedRecipe; }
+            get { return _ingredients; }
             set 
             { 
-                _selectedRecipe = value;
-                NotifyOfPropertyChange(() => SelectedRecipe);
+                _ingredients = value;
             }
         }
-
+        public BindableCollection<IngredientListModel> SelectedIngredients
+        {
+            get
+            {
+                _selectedIngredients.Clear();
+                _selectedIngredients.AddRange(Ingredients.Where(i => i.IsSelected));
+                return _selectedIngredients; 
+            }
+        }
+            
         public ShellViewModel()
         {
-            /*
-            Recipes.Add(new RecipeListModel { Id = 1, Name = "Spaghetti", Description = "Spaghetti description", Rating = 4 });
-            Recipes.Add(new RecipeListModel { Id = 2, Name = "Dahl", Description = "Dahl description", Rating = 5 });
-            Recipes.Add(new RecipeListModel { Id = 3, Name = "Kanapka z serem", Description = "Kanapka z serem description", Rating = 3 });
-            */
-            Recipes = new KissTheCookApi().GetRecipesByIngredients(new int[] { 1, 3 });
-        }
+            ApiProxy = new KissTheCookApiProxy();
 
-        /*
-        public bool CanShowRecipeDetails(RecipeListModel selectedRecipe) // Properties as parameters in camelCase to this condition and the actual cleearing method
-        {
-            if (selectedRecipe)
+            var ingredientsList = ApiProxy.GetIngredients();
+            
+            foreach (var i in ingredientsList)
             {
-                return false;
+                Ingredients.Add(new IngredientListModel(
+                    id: i.Id,
+                    name: i.Name
+                ));
             }
-            else return true;
         }
 
-        public void ShowRecipeDetails(RecipeListModel selectedRecipe)
+        public void ShowRecipeDetails()
         {
             ActivateItem(new RecipeDetailedViewModel(SelectedRecipe.Id));
         }
-        */
+
+        public bool CanLoadRecipes
+        {
+            get
+            {
+                return SelectedIngredients.Count == 0;
+            }    
+        }
+
+        public void LoadRecipes()
+        {
+            var @params = SelectedIngredients.Select(i => i.Id).ToList();
+            var recipesList = ApiProxy.GetRecipesByIngredients(@params);
+
+            foreach (var r in recipesList)
+                Recipes.Add(r);
+        }
         /*
         private string _firstName = "Marcin";
         private string _lastName;
