@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KissTheCook.API", "KissTheC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KissTheCook.WPF", "KissTheCook.WPF\KissTheCook.WPF.csproj", "{36CFEEF1-A8E3-4B23-8D79-5C4184E87282}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Controls", "Common.Controls\Common.Controls.csproj", "{213C860D-FA02-497C-B06D-FAAF2692D2DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{36CFEEF1-A8E3-4B23-8D79-5C4184E87282}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36CFEEF1-A8E3-4B23-8D79-5C4184E87282}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36CFEEF1-A8E3-4B23-8D79-5C4184E87282}.Release|Any CPU.Build.0 = Release|Any CPU
+		{213C860D-FA02-497C-B06D-FAAF2692D2DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{213C860D-FA02-497C-B06D-FAAF2692D2DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{213C860D-FA02-497C-B06D-FAAF2692D2DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{213C860D-FA02-497C-B06D-FAAF2692D2DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

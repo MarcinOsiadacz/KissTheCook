@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace KissTheCook.API.Data
 {
+    /// <summary>
+    /// Repository class for Repository design pattern
+    /// </summary>
     public class CookingRepository : ICookingRepository
     {
         private readonly KissTheCookDb _db;
@@ -82,7 +85,12 @@ namespace KissTheCook.API.Data
         public async Task<IEnumerable<Recipe>> GetRecipes(IList<int> ingredientIds)
         {
             var ingredientsCount = ingredientIds.Count(); // Verify the number of ingredients in params
-            
+
+            if (ingredientsCount == 0)
+            {
+                return new List<Recipe>();
+            }
+
             IQueryable<int> recipeIds = GetRecipeIdsByIngredient(ingredientIds.First()); // Get recipes containing first ingredient
 
             for (int i = 1; i < ingredientsCount; i++) // for the rest of ingredients

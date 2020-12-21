@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace KissTheCook.API.Data
 {
+    /// <summary>
+    /// Interface for Repository design pattern
+    /// </summary>
     public interface ICookingRepository
     {
         /* Generic */

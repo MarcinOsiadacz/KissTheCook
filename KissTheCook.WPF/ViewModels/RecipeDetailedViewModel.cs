@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using KissTheCook.WPF.Api;
+using KissTheCook.WPF.Helpers;
 using KissTheCook.WPF.Models;
 using System;
 using System.Collections.Generic;
@@ -31,34 +32,14 @@ namespace KissTheCook.WPF.ViewModels
             ApiProxy = new KissTheCookApiProxy();
             Recipe = ApiProxy.GetRecipeById(id);
         }
+
+        public void ExportToFile()
+        {
+            var filename = $"{Recipe.Name} {DateTime.Now.ToString("yyyyMMddhhmmss")}.txt";
+
+            var exportPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/{filename}";
+
+            ExportToFileFacade.Instance.ExportToJson(Recipe, exportPath);
+        }
     }
 }
-
-//    Recipe = new RecipeDetailedModel
-//    {
-//        Id = 5,
-//        Name = "Kanapka z serem, majonezem i pomidorem",
-//        Description = "Kanapka z serem, majonezem i pomidorem opis",
-//        Rating = 0,
-//        RecipeIngredients = new Ingredient[]
-//        {
-//            new Ingredient
-//            {
-//                MeasurementQuantityId = 1,
-//                MeasurementQuantityAmount = "1",
-//                MeasurementUnitId = 1,
-//                MeasurementUnitDescription = "Kromka",
-//                IngredientId = 3,
-//                IngredientName = "Chleb"
-//            },
-//            new Ingredient
-//            {
-//                MeasurementQuantityId = 1,
-//                MeasurementQuantityAmount = "1",
-//                MeasurementUnitId = 1,
-//                MeasurementUnitDescription = "Kromka",
-//                IngredientId = 3,
-//                IngredientName = "Chleb"
-//            },
-//        }
-//};

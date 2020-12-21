@@ -4,9 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KissTheCook.WPF.Views"
-             mc:Ignorable="d" Background="Red"
+             mc:Ignorable="d"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:CommonControls="clr-namespace:Common.Controls;assembly=Common.Controls"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal" 
+             TextOptions.TextRenderingMode="Auto"        
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Margin="12">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -16,32 +25,36 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
         </Grid.RowDefinitions>
 
+
         <!-- Row 1 -->
-        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="Recipe_Name"></TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="Recipe_Rating"></TextBlock>
-
+        <TextBlock Grid.Row="1" Grid.Column="1" 
+                   x:Name="Recipe_Name" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
+        <!-- <TextBlock Grid.Row="1" Grid.Column="2" x:Name="Recipe_Rating"></TextBlock> -->
+        <!--<CommonControls:Rate x:Name="Recipe_Rating" Grid.Row="1" Grid.Column="2" -->
+                           <!-- ></CommonControls:Rate> -->
         <!-- Row 2 -->
-        <DataGrid Grid.Row="2" Grid.Column="1" x:Name="Recipe_RecipeIngredients"
+        <StackPanel Grid.Row="2" Grid.Column="1" Margin="12" Grid.ColumnSpan="2">
+            <Label Padding="6" Content="Lista składników:" Style="{DynamicResource MaterialDesignLabel}"></Label>
+            <DataGrid x:Name="Recipe_RecipeIngredients"
                   AutoGenerateColumns="False" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Quantity" Width="*"
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="auto" Header=""
                                     Binding="{Binding MeasurementQuantityAmount}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Unit" Width="*"
+                    <DataGridTextColumn Width="auto" Header=""
                                     Binding="{Binding MeasurementUnitDescription}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Ingredient" Width="*"
+                    <DataGridTextColumn Width="*" Header=""
                                     Binding="{Binding IngredientName}"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        
-        <!-- Row 3 -->
-        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="Recipe_Description"></TextBlock>
-
+                </DataGrid.Columns>
+            </DataGrid>
+            <materialDesign:Card Padding="12" Margin="6">
+                <TextBlock x:Name="Recipe_Description" TextWrapping="Wrap"
+                           Style="{DynamicResource MaterialDesignTextBlock}"></TextBlock>
+            </materialDesign:Card>
+            <Button x:Name="ExportToFile" Content="Eksportuj do pliku"></Button>
+        </StackPanel>
     </Grid>
 </UserControl>

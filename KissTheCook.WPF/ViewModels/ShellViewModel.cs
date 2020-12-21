@@ -29,6 +29,7 @@ namespace KissTheCook.WPF.ViewModels
             {
                 _selectedRecipe = value;
                 NotifyOfPropertyChange(() => SelectedRecipe);
+                NotifyOfPropertyChange(() => CanShowRecipeDetails);
             }
         }
         public BindableCollection<RecipeListModel> Recipes
@@ -75,17 +76,17 @@ namespace KissTheCook.WPF.ViewModels
             }
         }
 
-        public void ShowRecipeDetails()
-        {
-            ActivateItem(new RecipeDetailedViewModel(SelectedRecipe.Id));
-        }
-
-        public bool CanLoadRecipes
+        public bool CanShowRecipeDetails
         {
             get
             {
-                return SelectedIngredients.Count == 0;
-            }    
+                return !(SelectedRecipe == null);
+            }
+        }
+
+        public void ShowRecipeDetails()
+        {
+            ActivateItem(new RecipeDetailedViewModel(SelectedRecipe.Id));
         }
 
         public void LoadRecipes()
@@ -93,95 +94,9 @@ namespace KissTheCook.WPF.ViewModels
             var @params = SelectedIngredients.Select(i => i.Id).ToList();
             var recipesList = ApiProxy.GetRecipesByIngredients(@params);
 
+            Recipes.Clear();
             foreach (var r in recipesList)
                 Recipes.Add(r);
         }
-        /*
-        private string _firstName = "Marcin";
-        private string _lastName;
-        private BindableCollection<PersonModel> _people = new BindableCollection<PersonModel>();
-        private PersonModel _selectedPerson;
-
-        public ShellViewModel()
-        {
-            People.Add(new PersonModel { FirstName = "Marcin", LastName = "Osiadacz" });
-            People.Add(new PersonModel { FirstName = "Nina", LastName = "Baczynska" });
-            People.Add(new PersonModel { FirstName = "Abisia", LastName = "Baczynska-Osiadacz" });
-        }
-
-        public string FirstName // Property Name must be consitent with x:Name in Xaml you want to bind
-        {
-            get { return _firstName; }
-            set 
-            { 
-                _firstName = value;
-                NotifyOfPropertyChange(() => FirstName); // Notify every listener that property has changed
-                NotifyOfPropertyChange(() => FullName);
-            }
-        }
-
-        public string LastName
-        {
-            get 
-            { 
-                return _lastName; 
-            }
-            set 
-            { 
-                _lastName = value;
-                NotifyOfPropertyChange(() => LastName);
-                NotifyOfPropertyChange(() => FullName);
-            }
-        }
-
-        public string FullName
-        {
-            get 
-            { 
-                return $"{FirstName} {LastName}"; 
-            }
-        }
-
-        public BindableCollection<PersonModel> People
-        {
-            get { return _people; }
-            set { _people = value; }
-        }
-
-        public PersonModel SelectedPerson
-        {
-            get { return _selectedPerson; }
-            set 
-            { 
-                _selectedPerson = value;
-                NotifyOfPropertyChange(() => SelectedPerson);
-            }
-        }
-
-        public bool CanClearText(string firstName, string lastName) // Properties as parameters in camelCase to this condition and the actual cleearing method
-        {
-            if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName))
-            {
-                return false;
-            }
-            else return true;
-        }
-
-        public void ClearText(string firstName, string lastName) // Method Name should be consistent with name of the calling button
-        {
-            FirstName = "";
-            LastName = "";
-        }
-
-        public void LoadPageOne()
-        {
-            ActivateItem(new FirstChildViewModel());
-        }
-
-        public void LoadPageTwo()
-        {
-            ActivateItem(new SecondChildViewModel());
-        }
-        */
     }
 }
