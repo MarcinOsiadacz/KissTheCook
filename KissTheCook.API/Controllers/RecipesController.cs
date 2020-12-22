@@ -89,5 +89,26 @@ namespace KissTheCook.API.Controllers
 
             return BadRequest($"Updating recipe {id} failed on save");
         }
+
+        [HttpPut("{id}/rate/{ratingValue}")]
+        public async Task<IActionResult> RateRecipe(int id, int ratingValue)
+        {
+            var recipeFromRepository = await _cookingRepository.GetRecipe(id);
+
+            recipeFromRepository.Rating = ratingValue;
+
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data provided.");
+
+            if (await _cookingRepository.SaveChanges())
+            {
+                return Ok(new
+                {
+                    message = $"Recipe {id} rated successfully"
+                });
+            }
+
+            return BadRequest($"Rating recipe {id} failed on save");
+        }
     }
 }

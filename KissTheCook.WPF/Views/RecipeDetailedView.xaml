@@ -25,6 +25,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
         </Grid.RowDefinitions>
@@ -33,9 +34,10 @@
         <!-- Row 1 -->
         <TextBlock Grid.Row="1" Grid.Column="1" 
                    x:Name="Recipe_Name" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
-        <!-- <TextBlock Grid.Row="1" Grid.Column="2" x:Name="Recipe_Rating"></TextBlock> -->
-        <!--<CommonControls:Rate x:Name="Recipe_Rating" Grid.Row="1" Grid.Column="2" -->
-                           <!-- ></CommonControls:Rate> -->
+        <CommonControls:Rate x:Name="Rat" Grid.Row="1" Grid.Column="2" 
+                             RateValue="{Binding Path=RecipeRate, Mode=TwoWay}" 
+                             RatedColor="#673ab7" NotRatedColor="#efe6ff"
+                            ></CommonControls:Rate>
         <!-- Row 2 -->
         <StackPanel Grid.Row="2" Grid.Column="1" Margin="12" Grid.ColumnSpan="2">
             <Label Padding="6" Content="Lista składników:" Style="{DynamicResource MaterialDesignLabel}"></Label>
@@ -54,7 +56,8 @@
                 <TextBlock x:Name="Recipe_Description" TextWrapping="Wrap"
                            Style="{DynamicResource MaterialDesignTextBlock}"></TextBlock>
             </materialDesign:Card>
-            <Button x:Name="ExportToFile" Content="Eksportuj do pliku"></Button>
+            
         </StackPanel>
+        <Button x:Name="ExportToFile" Grid.Row="3" Grid.Column="2" Content="Eksportuj do pliku"></Button>
     </Grid>
 </UserControl>

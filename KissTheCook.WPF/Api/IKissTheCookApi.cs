@@ -15,5 +15,6 @@ namespace KissTheCook.WPF.Api
         RecipeDetailedModel GetRecipeById(int id);
         ICollection<RecipeListModel> GetRecipesByIngredients(IList<int> ingredientIds);
         ICollection<IngredientResponseModel> GetIngredients();
+        RateRecipeResponseModel RateRecipe(int id, int rateValue);
     }
 }

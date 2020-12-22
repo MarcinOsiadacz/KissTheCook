@@ -28,5 +28,10 @@ namespace KissTheCook.WPF.Api
         {
             return KissTheCookApi.GetRecipesByIngredients(ingredientIds);
         }
+
+        public RateRecipeResponseModel RateRecipe(int id, int rateValue)
+        {
+            return KissTheCookApi.RateRecipe(id, rateValue);
+        }
     }
 }

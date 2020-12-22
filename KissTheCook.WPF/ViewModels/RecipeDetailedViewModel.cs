@@ -27,10 +27,33 @@ namespace KissTheCook.WPF.ViewModels
             set { _recipe = value; }
         }
 
+        private int _recipe_rate;
+
+        public int RecipeRate
+        {
+            get 
+            { 
+                return _recipe_rate; 
+            }
+            set 
+            {
+                _recipe_rate = value;
+                NotifyOfPropertyChange(() => RecipeRate);
+
+                if (Recipe.Rating != RecipeRate)
+                {
+                    Recipe.Rating = RecipeRate;
+                    ApiProxy.RateRecipe(Recipe.Id, RecipeRate);
+                }
+                      
+            }
+        }
+
         public RecipeDetailedViewModel(int id)
         {
             ApiProxy = new KissTheCookApiProxy();
             Recipe = ApiProxy.GetRecipeById(id);
+            RecipeRate = Recipe.Rating;
         }
 
         public void ExportToFile()

@@ -4,6 +4,7 @@ using Flurl.Http;
 using KissTheCook.WPF.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -55,6 +56,17 @@ namespace KissTheCook.WPF.Api
 
             return url
                 .GetJsonAsync<ICollection<IngredientResponseModel>>()
+                .Result;
+        }
+
+        public RateRecipeResponseModel RateRecipe(int id, int rateValue)
+        {
+            Url url = new Url($"{BaseUrl}{RecipesEndpointUrl}/{id}/rate/{rateValue}");
+
+            return url
+                .WithHeader("ContentType", "application/json")
+                .PutAsync()
+                .ReceiveJson<RateRecipeResponseModel>()
                 .Result;
         }
     }

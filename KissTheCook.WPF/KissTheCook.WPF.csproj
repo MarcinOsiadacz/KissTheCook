@@ -93,6 +93,7 @@
     <Compile Include="Api\KissTheCookApiProxy.cs" />
     <Compile Include="Api\IKissTheCookApi.cs" />
     <Compile Include="Api\IngredientResponseModel.cs" />
+    <Compile Include="Api\RateRecipeResponseModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
