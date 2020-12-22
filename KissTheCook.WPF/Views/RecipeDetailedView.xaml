@@ -19,29 +19,37 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="100"></ColumnDefinition>
             <ColumnDefinition Width="5"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
         </Grid.RowDefinitions>
 
 
         <!-- Row 1 -->
         <TextBlock Grid.Row="1" Grid.Column="1" 
-                   x:Name="Recipe_Name" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
-        <CommonControls:Rate x:Name="Rat" Grid.Row="1" Grid.Column="2" 
+                   x:Name="Recipe_Name" Style="{DynamicResource MaterialDesignHeadline6TextBlock}" 
+                   TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   ></TextBlock>
+        <CommonControls:Rate x:Name="Rating" Grid.Row="1" Grid.Column="2" 
                              RateValue="{Binding Path=RecipeRate, Mode=TwoWay}" 
-                             RatedColor="#673ab7" NotRatedColor="#efe6ff"
+                             RatedColor="#673ab7" NotRatedColor="#efe6ff" 
+                             HorizontalAlignment="Right" VerticalAlignment="Top"
                             ></CommonControls:Rate>
         <!-- Row 2 -->
-        <StackPanel Grid.Row="2" Grid.Column="1" Margin="12" Grid.ColumnSpan="2">
-            <Label Padding="6" Content="Lista składników:" Style="{DynamicResource MaterialDesignLabel}"></Label>
-            <DataGrid x:Name="Recipe_RecipeIngredients"
+        <Label Content="Lista składników:" Style="{DynamicResource MaterialDesignLabel}"
+               Grid.Row="2" Grid.Column="1"
+               ></Label>
+
+        <!-- Row 3 -->
+        <DataGrid x:Name="Recipe_RecipeIngredients" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
                   AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="auto" Header=""
@@ -52,12 +60,17 @@
                                     Binding="{Binding IngredientName}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <materialDesign:Card Padding="12" Margin="6">
-                <TextBlock x:Name="Recipe_Description" TextWrapping="Wrap"
-                           Style="{DynamicResource MaterialDesignTextBlock}"></TextBlock>
-            </materialDesign:Card>
-            
-        </StackPanel>
-        <Button x:Name="ExportToFile" Grid.Row="3" Grid.Column="2" Content="Eksportuj do pliku"></Button>
+        
+        <!-- Row 4 -->
+        <TextBlock x:Name="Recipe_Description" TextWrapping="Wrap" Grid.Row="4" Padding="12"
+                   Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource MaterialDesignTextBlock}"
+                   ></TextBlock>
+
+        <!-- Row 5 -->
+        <Button x:Name="ExportToFile" Grid.Row="5" Grid.Column="2"
+                Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
+            <materialDesign:PackIcon Kind="FileExport">
+            </materialDesign:PackIcon>
+                </Button>
     </Grid>
 </UserControl>

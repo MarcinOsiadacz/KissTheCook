@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="KissTheCook" Height="800" Width="1200">
+        Title="KissTheCook" Height="800" Width="1200" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"></ColumnDefinition>
@@ -24,67 +24,78 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <!-- Column 1 -->
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="12">
-            <Label Style="{DynamicResource MaterialDesignLabel}" Content="Zaznacz to, co masz w lodówce..."></Label>
-            <ListBox x:Name="Ingredients" ItemsSource="{Binding Ingredients}"
-                 SelectionMode="Multiple" DisplayMemberPath="Name">
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListBoxItem}"
+        <!-- Row 0, 1 -->
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="2" Background="#673ab7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <materialDesign:PackIcon Kind="Cook" Width="40" Height="40" Grid.Row="0" Grid.Column="0" 
+                                     Foreground="White" Margin="20" VerticalAlignment="Center"
+                                     ></materialDesign:PackIcon>
+            <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
+                   Text="KissTheCook" Foreground="White" 
+                   Style="{DynamicResource MaterialDesignHeadline4TextBlock}" Padding="6"
+                   >
+            </TextBlock>
+        </Grid>
+        
+        <!-- Row 2 -->
+        <Label Style="{DynamicResource MaterialDesignLabel}" Grid.Row="2" Grid.Column="1"
+               Content="Zaznacz to, co masz w lodówce..." Padding="12"></Label>
+        <Label Style="{DynamicResource MaterialDesignLabel}" Grid.Row="2" Grid.Column="2"
+               Content="Wybierz przepis z listy poniżej..." Padding="12"></Label>
+        
+        <!-- Row 3 -->
+        <!-- Ingredients list for selection -->
+        <ListBox x:Name="Ingredients" ItemsSource="{Binding Ingredients}"
+                 SelectionMode="Multiple" DisplayMemberPath="Name"
+                 Grid.Row="3" Grid.Column="1" Grid.RowSpan="2"
+            ><ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}"
                             BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                        <Setter Property="IsSelected"
+                    <Setter Property="IsSelected"
                             Value="{Binding IsSelected, Mode=TwoWay}"></Setter>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-            </ListBox>
-            <Button x:Name="LoadRecipes">Wyświetl przepisy</Button>
-        </StackPanel>
-        
-        <!-- Column 2 -->
-        <StackPanel Grid.Row="1" Grid.Column="2" Margin="12">
-            <Label Style="{DynamicResource MaterialDesignLabel}" Content="Wybierz przepis z listy poniżej..."></Label>
-            <DataGrid x:Name="Recipes" IsReadOnly="True" ItemsSource="{Binding Recipes}"
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+
+        <!-- Recipes based on selected ingredients -->
+        <DataGrid x:Name="Recipes" IsReadOnly="True" ItemsSource="{Binding Recipes}" Grid.Row="3" 
+                  Grid.Column="2" Grid.RowSpan="2" Padding="12"
                   SelectedItem="{Binding Path=SelectedRecipe, Mode=OneWayToSource}" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Ocena" Binding="{Binding Rating}"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <Button x:Name="ShowRecipeDetails"
-                >Pokaż wybrany przepis</Button>
-        </StackPanel>
-        
-        <!-- Column 3 -->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}"/>
+                <!--<DataGridTextColumn Header="Ocena" Binding="{Binding Rating}"/>-->
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Recipe Details -->
         <!-- Active Child Form -->
-        <ContentControl Grid.Row="1" Grid.Column="3"
+        <ContentControl Grid.Row="3" Grid.Column="3" Grid.RowSpan="2"
                         x:Name="ActiveItem"
                         ></ContentControl>
 
-
-        <!-- Row 1 --><!--
-        <TextBlock Text="{Binding Path=FullName, Mode=OneWay}" 
-                   Grid.Row="1" Grid.Column="1"></TextBlock>
-
-        --><!-- Row 2 --><!--
-        <TextBox Grid.Row="2" Grid.Column="1" x:Name="FirstName"></TextBox>
-        <TextBox Grid.Row="2" Grid.Column="2" x:Name="LastName"></TextBox>
-
-        --><!-- Row 3 --><!--
-        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="People" 
-                  SelectedItem="{Binding Path=SelectedPerson, Mode=OneWayToSource}"
-                  DisplayMemberPath="FirstName">
-        </ComboBox>
-        <TextBlock Grid.Row="3" Grid.Column="2" x:Name="SelectedPerson_LastName"></TextBlock>
-
-        --><!-- Row 4 --><!--
-        <Button x:Name="ClearText" Grid.Row="4" Grid.Column="1">Clear Text</Button>
-
-        --><!-- Row 5 --><!--
-        <Button x:Name="LoadPageOne" Grid.Row="5" Grid.Column="1">Load Page One</Button>
-        <Button x:Name="LoadPageTwo" Grid.Row="5" Grid.Column="2">Load Page Two</Button>-->    
+        <!-- Row 4 -->
+        <Button x:Name="LoadRecipes" Grid.Row="5" Grid.Column="1" Margin="6"
+                Style="{StaticResource MaterialDesignFlatMidBgButton}">
+            <materialDesign:PackIcon Kind="Search">
+            </materialDesign:PackIcon>
+        </Button>
+        <Button x:Name="ShowRecipeDetails" Grid.Row="5" Grid.Column="2" Margin="6"
+                        Style="{StaticResource MaterialDesignFlatMidBgButton}"
+                Content="Wyświetl przepis">
+        </Button>
     </Grid>
 </Window>

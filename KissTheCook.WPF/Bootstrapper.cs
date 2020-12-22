@@ -20,7 +20,6 @@ namespace KissTheCook.WPF
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             DisplayRootViewFor<ShellViewModel>();
-            //ConventionManager.AddElementConvention<Rate>(Rate.RatingValueProperty, "Value", "")
         }
     }
 }

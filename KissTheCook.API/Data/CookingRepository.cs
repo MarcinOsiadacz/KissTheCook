@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace KissTheCook.API.Data
 {
     /// <summary>
-    /// Repository class for Repository design pattern
+    /// Concreete repository class for Repository design pattern
     /// </summary>
     public class CookingRepository : ICookingRepository
     {
@@ -116,13 +116,5 @@ namespace KissTheCook.API.Data
                 )
                 .Select(x => x.RecipeId);
         }
-
-        //private IQueryable<int> GetRecipeIdsByIngredientSet(IList<int> ingredientId)
-        //{
-        //    return _db.RecipeIngredients.Where(r =>
-        //        r.IngredientId.Equals
-        //    )
-        //    .Select(x => x.RecipeId);
-        //}
     }
 }
