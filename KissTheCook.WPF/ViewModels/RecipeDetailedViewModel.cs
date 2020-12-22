@@ -10,15 +10,19 @@ using System.Threading.Tasks;
 
 namespace KissTheCook.WPF.ViewModels
 {
+    /// <summary>
+    /// Example client for Adapter Design Pattern
+    /// </summary>
     public class RecipeDetailedViewModel : Screen
     {
         private RecipeDetailedModel _recipe;
-        private KissTheCookApiProxy _apiProxy;
+        private int _recipe_rate;
+        private ITargetApi _api;
 
-        public KissTheCookApiProxy ApiProxy
+        public ITargetApi Api
         {
-            get { return _apiProxy; }
-            set { _apiProxy = value; }
+            get { return _api; }
+            set { _api = value; }
         }
 
         public RecipeDetailedModel Recipe
@@ -26,8 +30,6 @@ namespace KissTheCook.WPF.ViewModels
             get { return _recipe; }
             set { _recipe = value; }
         }
-
-        private int _recipe_rate;
 
         public int RecipeRate
         {
@@ -43,7 +45,7 @@ namespace KissTheCook.WPF.ViewModels
                 if (Recipe.Rating != RecipeRate)
                 {
                     Recipe.Rating = RecipeRate;
-                    ApiProxy.RateRecipe(Recipe.Id, RecipeRate);
+                    Api.OcenPrzepis(Recipe.Id, RecipeRate);
                 }
                       
             }
@@ -51,8 +53,9 @@ namespace KissTheCook.WPF.ViewModels
 
         public RecipeDetailedViewModel(int id)
         {
-            ApiProxy = new KissTheCookApiProxy();
-            Recipe = ApiProxy.GetRecipeById(id);
+            Api = new ApiAdapter();
+
+            Recipe = Api.WczytajPrzepis(id);
             RecipeRate = Recipe.Rating;
         }
 

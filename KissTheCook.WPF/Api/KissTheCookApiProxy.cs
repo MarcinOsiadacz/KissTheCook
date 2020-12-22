@@ -9,6 +9,7 @@ namespace KissTheCook.WPF.Api
 {
     /// <summary>
     /// Proxy Class for Proxy Design Pattern
+    /// Also Adaptee class for Adapter Design Pattern
     /// </summary>
     public class KissTheCookApiProxy : IKissTheCookApi
     {

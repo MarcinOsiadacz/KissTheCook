@@ -99,7 +99,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Api\KissTheCookApi.cs" />
+    <Compile Include="Helpers\ApiAdapter.cs" />
     <Compile Include="Helpers\ExportToFileFacade.cs" />
+    <Compile Include="Helpers\ITargetApi.cs" />
     <Compile Include="Models\IngredientListModel.cs" />
     <Compile Include="Models\RecipeDetailedModel.cs" />
     <Compile Include="Models\RecipeListModel.cs" />

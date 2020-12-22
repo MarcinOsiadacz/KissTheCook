@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using KissTheCook.WPF.Api;
+using KissTheCook.WPF.Helpers;
 using KissTheCook.WPF.Models;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,13 @@ using System.Threading.Tasks;
 
 namespace KissTheCook.WPF.ViewModels
 {
+    /// <summary>
+    /// Example client for Adapter Design Pattern
+    /// </summary>
     public class ShellViewModel : Conductor<object>
     {
         private KissTheCookApiProxy _apiProxy;
+        private ITargetApi _api;
         private RecipeListModel _selectedRecipe;
         private BindableCollection<RecipeListModel> _recipes = new BindableCollection<RecipeListModel>();
         private BindableCollection<IngredientListModel> _ingredients = new BindableCollection<IngredientListModel>();
@@ -60,12 +65,18 @@ namespace KissTheCook.WPF.ViewModels
                 return _selectedIngredients; 
             }
         }
-            
+
+        public ITargetApi Api
+        {
+            get { return _api; }
+            set { _api = value; }
+        }
+
         public ShellViewModel()
         {
-            ApiProxy = new KissTheCookApiProxy();
+            Api = new ApiAdapter();
 
-            var ingredientsList = ApiProxy.GetIngredients();
+            var ingredientsList = Api.WczytajSkladniki();
             
             foreach (var i in ingredientsList)
             {
@@ -92,7 +103,7 @@ namespace KissTheCook.WPF.ViewModels
         public void LoadRecipes()
         {
             var @params = SelectedIngredients.Select(i => i.Id).ToList();
-            var recipesList = ApiProxy.GetRecipesByIngredients(@params);
+            var recipesList = Api.WczytajPrzepisyZeSkladnikow(@params);
 
             Recipes.Clear();
             foreach (var r in recipesList)
